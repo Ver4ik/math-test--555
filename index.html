@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nationella prov · Matematik · åk 7–9 · 20 завдань</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #F3F1EC;
+  --paper: #FDFCF8;
+  --ink: #18160F;
+  --muted: #6B6558;
+  --line: #DDD9CE;
+  --blue: #005F9E;
+  --blue-light: #EAF3FB;
+  --yellow: #FECC02;
+  --green: #1B7A4F;
+  --green-bg: #EBF7F1;
+  --red: #B83030;
+  --red-bg: #FBF0EF;
+  --r: 6px;
+  --sh: 0 1px 6px rgba(24,22,15,.07);
+}
+body { background:var(--bg); font-family:'Inter',sans-serif; color:var(--ink); min-height:100vh; }
+.page { max-width:840px; margin:0 auto; padding:36px 20px 80px; }
+
+/* ── HEADER ── */
+.top-bar {
+  background: var(--blue);
+  border-radius: 8px 8px 0 0;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 0;
+  position: relative;
+}
+.top-stripe { height:6px; background: var(--yellow); }
+.top-inner {
+  display: flex; align-items: center; gap:20px;
+  padding: 20px 28px 22px;
+  color: white;
+}
+.top-flag { font-size:38px; flex-shrink:0; }
+.top-text { flex:1; }
+.top-eyebrow { font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; opacity:.65; margin-bottom:5px; }
+.top-title { font-family:'Source Serif 4',serif; font-size:24px; font-weight:700; line-height:1.15; }
+.top-sub { font-size:12px; opacity:.65; margin-top:4px; }
+.top-meta { text-align:right; flex-shrink:0; }
+.top-meta .big { font-family:'DM Mono',monospace; font-size:34px; font-weight:500; line-height:1; }
+.top-meta .sm { font-size:11px; opacity:.65; }
+.top-bottom-stripe { height:4px; background: linear-gradient(90deg, var(--yellow) 50%, transparent 50%); opacity:.5; }
+
+.cover-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 20px 28px 22px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+  box-shadow: var(--sh);
+}
+.cover-item { display:flex; flex-direction:column; gap:2px; }
+.cover-label { font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.cover-val { font-size:15px; font-weight:600; color:var(--ink); }
+
+/* ── INSTRUCTIONS ── */
+.instr {
+  background: var(--blue-light);
+  border: 1px solid rgba(0,95,158,.18);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  font-size:13.5px;
+  line-height:1.8;
+  color:#2A3D50;
+}
+.instr strong { color: var(--ink); }
+
+/* ── PROGRESS ── */
+.prog-wrap { margin-bottom:24px; }
+.prog-row { display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); margin-bottom:5px; }
+.prog-track { height:3px; background:var(--line); border-radius:2px; overflow:hidden; }
+.prog-bar { height:100%; background:var(--blue); border-radius:2px; transition:width .35s; width:0%; }
+
+/* ── SECTION DIVIDER ── */
+.sec-div {
+  display:flex; align-items:center; gap:12px;
+  margin: 32px 0 16px;
+}
+.sec-div::before,.sec-div::after { content:''; flex:1; height:1px; background:var(--line); }
+.sec-pill {
+  display:flex; align-items:center; gap:6px;
+  font-size:10px; font-weight:600; letter-spacing:.13em; text-transform:uppercase;
+  color: white; background: var(--blue);
+  border-radius:100px; padding:4px 14px; white-space:nowrap;
+}
+
+/* ── QUESTION CARD ── */
+.qcard {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  margin-bottom: 14px;
+  overflow: hidden;
+  box-shadow: var(--sh);
+  transition: border-color .25s;
+}
+.qcard.ok  { border-color: var(--green); }
+.qcard.err { border-color: var(--red); }
+
+.qcard-head {
+  display:flex; align-items:center; gap:10px;
+  padding: 11px 18px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.qcard.ok  .qcard-head { background:var(--green-bg); border-color:rgba(27,122,79,.15); }
+.qcard.err .qcard-head { background:var(--red-bg);   border-color:rgba(184,48,48,.15); }
+
+.qnum {
+  font-family:'DM Mono',monospace; font-size:10.5px; font-weight:500;
+  color:var(--blue); background:var(--blue-light);
+  border:1px solid rgba(0,95,158,.2); border-radius:3px;
+  padding:2px 9px; flex-shrink:0;
+}
+.qcard.ok  .qnum { color:var(--green); background:var(--green-bg); border-color:rgba(27,122,79,.3); }
+.qcard.err .qnum { color:var(--red);   background:var(--red-bg);   border-color:rgba(184,48,48,.3); }
+
+.qtopic { font-size:11px; color:var(--muted); }
+.qpts   { margin-left:auto; font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
+
+.qcard-body { padding:18px 18px 14px; }
+
+.qctx {
+  background:#F6F3EB; border:1px solid var(--line);
+  border-radius:4px; padding:12px 16px;
+  margin-bottom:14px; font-size:13.5px;
+  font-style:italic; line-height:1.75; color:#4A4438;
+}
+.qctx strong { font-style:normal; color:var(--ink); }
+
+.qtext {
+  font-family:'Source Serif 4',serif;
+  font-size:17px; line-height:1.6;
+  color:var(--ink); margin-bottom:16px;
+}
+.qtext em { font-style:italic; color:var(--blue); }
+
+/* MC options */
+.opts { display:flex; flex-direction:column; gap:6px; }
+.opt {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:10px 13px; border:1px solid var(--line);
+  border-radius:4px; background:white;
+  cursor:pointer; font-size:14px;
+  color:var(--ink); line-height:1.5;
+  transition:all .15s;
+}
+.opt:hover { border-color:var(--blue); background:var(--blue-light); }
+.opt input { accent-color:var(--blue); width:15px; height:15px; flex-shrink:0; margin-top:2px; }
+.opt .lt { font-family:'DM Mono',monospace; font-size:11px; color:var(--blue); min-width:18px; flex-shrink:0; margin-top:1px; }
+.opt.ok  { border-color:var(--green) !important; background:var(--green-bg); color:var(--green); }
+.opt.ok  .lt { color:var(--green); }
+.opt.err { border-color:var(--red) !important; background:var(--red-bg); color:var(--red); text-decoration:line-through; opacity:.7; }
+.opt.err .lt { color:var(--red); }
+
+/* Open input */
+.open-wrap { display:flex; flex-direction:column; gap:6px; }
+.open-in {
+  font-family:'DM Mono',monospace; font-size:15px;
+  width:220px; padding:9px 13px;
+  border:1.5px solid var(--line); border-radius:4px;
+  background:white; color:var(--ink); outline:none;
+  transition:border-color .2s;
+}
+.open-in:focus { border-color:var(--blue); }
+.open-in.ok  { border-color:var(--green); background:var(--green-bg); color:var(--green); }
+.open-in.err { border-color:var(--red);   background:var(--red-bg);   color:var(--red); }
+.open-hint { font-size:11.5px; color:var(--muted); }
+.open-reveal { font-size:12.5px; font-weight:600; color:var(--green); display:none; margin-top:2px; }
+
+/* Feedback */
+.qfb { display:none; margin-top:11px; padding:10px 13px; border-radius:4px; font-size:13px; line-height:1.65; }
+.qfb.show { display:block; }
+.qfb.ok  { background:var(--green-bg); color:#134736; border-left:3px solid var(--green); }
+.qfb.err { background:var(--red-bg);   color:#6B1A1A; border-left:3px solid var(--red); }
+
+/* ── BOTTOM BUTTONS ── */
+.btn-row { display:flex; justify-content:center; gap:12px; margin-top:32px; flex-wrap:wrap; }
+.btn-check {
+  font-size:14px; font-weight:600; color:white;
+  background:var(--blue); border:none; border-radius:4px;
+  padding:13px 40px; cursor:pointer; letter-spacing:.02em;
+  transition:all .2s;
+}
+.btn-check:hover { background:#00487A; box-shadow:0 4px 18px rgba(0,95,158,.3); transform:translateY(-1px); }
+.btn-reset {
+  font-size:14px; font-weight:500; color:var(--muted);
+  background:white; border:1px solid var(--line); border-radius:4px;
+  padding:13px 26px; cursor:pointer; display:none; transition:all .2s;
+}
+.btn-reset:hover { border-color:var(--blue); color:var(--blue); }
+
+/* ── RESULT ── */
+.result { display:none; margin-top:28px; background:var(--paper); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:var(--sh); }
+.result.show { display:block; }
+.res-top { background:var(--blue); color:white; padding:24px 28px; display:flex; align-items:center; gap:24px; }
+.res-score { font-family:'Source Serif 4',serif; font-size:60px; font-weight:700; line-height:1; flex-shrink:0; }
+.res-label { font-size:12px; opacity:.7; margin-bottom:4px; }
+.res-verdict { font-size:17px; font-weight:600; line-height:1.35; }
+.res-body { padding:22px 28px; }
+.res-bd { display:flex; flex-direction:column; gap:7px; margin-bottom:20px; }
+.rbi { display:flex; align-items:center; gap:10px; font-size:12.5px; padding:7px 11px; border-radius:4px; }
+.rbi.ok  { background:var(--green-bg); color:#134736; }
+.rbi.err { background:var(--red-bg);   color:#6B1A1A; }
+.rbi-ico { font-size:13px; flex-shrink:0; }
+.rbi-q   { font-weight:600; min-width:110px; }
+
+/* Grade scale */
+.grade-box { background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:14px 18px; margin-top:16px; }
+.grade-title { font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+.grade-row { display:flex; gap:4px; }
+.gb { flex:1; text-align:center; padding:7px 3px; border-radius:3px; font-size:11px; font-weight:700; font-family:'DM Mono',monospace; line-height:1.4; }
+.gb.hi { outline:2.5px solid var(--ink); outline-offset:1px; }
+.gF{background:#FDECEA;color:#9B1C1C;} .gE{background:#FEF3C7;color:#78450F;}
+.gD{background:#FFFBEB;color:#6B5800;} .gC{background:#DCFCE7;color:#14532D;}
+.gB{background:#DBEAFE;color:#1E3A5F;} .gA{background:#C7E2FD;color:#0B2D52;}
+
+.footer { text-align:center; margin-top:44px; font-size:11px; color:var(--muted); letter-spacing:.04em; }
+
+@media(max-width:560px){
+  .cover-card { grid-template-columns:1fr 1fr; }
+  .top-meta { display:none; }
+  .res-top { flex-direction:column; text-align:center; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HEADER ── -->
+<div class="top-bar">
+  <div class="top-stripe"></div>
+  <div class="top-inner">
+    <div class="top-flag">🇸🇪</div>
+    <div class="top-text">
+      <div class="top-eyebrow">Nationella prov · Matematik · Grundskola åk 7–9</div>
+      <div class="top-title">Математика та геометрія</div>
+      <div class="top-sub">Тест у форматі шведських національних іспитів · Skolverket</div>
+    </div>
+    <div class="top-meta">
+      <div class="big">20</div>
+      <div class="sm">завдань · 54 бали</div>
+    </div>
+  </div>
+  <div class="top-bottom-stripe"></div>
+</div>
+<div class="cover-card">
+  <div class="cover-item"><div class="cover-label">Рівень</div><div class="cover-val">åk 7–9</div></div>
+  <div class="cover-item"><div class="cover-label">Час</div><div class="cover-val">60–75 хв</div></div>
+  <div class="cover-item"><div class="cover-label">Частин</div><div class="cover-val">3 частини</div></div>
+  <div class="cover-item"><div class="cover-label">Максимум</div><div class="cover-val">54 бали</div></div>
+</div>
+
+<!-- INSTRUCTIONS -->
+<div class="instr">
+  <strong>Інструкція.</strong> Тест складається з трьох частин:<br>
+  <strong>Частина A</strong> — вибір відповіді, без калькулятора (завдання 1–8).<br>
+  <strong>Частина B</strong> — відкриті задачі, калькулятор дозволено (завдання 9–15).<br>
+  <strong>Частина C</strong> — задачі на міркування та аналіз (завдання 16–20).<br>
+  Читай умову уважно. У відкритих задачах запиши лише числову відповідь.
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-wrap">
+  <div class="prog-row"><span>Прогрес відповідей</span><span id="ptxt">0 / 20</span></div>
+  <div class="prog-track"><div class="prog-bar" id="pbar"></div></div>
+</div>
+
+<!-- ════════════════════════════
+     ЧАСТИНА A — Вибір, без калькулятора
+════════════════════════════ -->
+<div class="sec-div"><div class="sec-pill">📝 Частина A · Вибір відповіді · Без калькулятора</div></div>
+
+<!-- Q1 -->
+<div class="qcard" id="q1">
+  <div class="qcard-head"><span class="qnum">Завд. 1</span><span class="qtopic">Числа і відсотки</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> У класі 25 учнів. 40% з них займаються спортом.</div>
+    <div class="qtext">Скільки учнів займаються спортом?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q1" value="A"><span class="lt">A</span>8</label>
+      <label class="opt"><input type="radio" name="q1" value="B"><span class="lt">B</span>10</label>
+      <label class="opt"><input type="radio" name="q1" value="C"><span class="lt">C</span>12</label>
+      <label class="opt"><input type="radio" name="q1" value="D"><span class="lt">D</span>15</label>
+    </div>
+    <div class="qfb" id="q1-fb"></div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qcard" id="q2">
+  <div class="qcard-head"><span class="qnum">Завд. 2</span><span class="qtopic">Геометрія · Периметр</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Сад у формі прямокутника: довжина <strong>12 м</strong>, ширина <strong>7 м</strong>. Навколо саду ставлять паркан.</div>
+    <div class="qtext">Яка довжина паркану?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q2" value="A"><span class="lt">A</span>19 м</label>
+      <label class="opt"><input type="radio" name="q2" value="B"><span class="lt">B</span>38 м</label>
+      <label class="opt"><input type="radio" name="q2" value="C"><span class="lt">C</span>84 м</label>
+      <label class="opt"><input type="radio" name="q2" value="D"><span class="lt">D</span>28 м</label>
+    </div>
+    <div class="qfb" id="q2-fb"></div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qcard" id="q3">
+  <div class="qcard-head"><span class="qnum">Завд. 3</span><span class="qtopic">Алгебра · Рівняння</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qtext">Розв'яжіть рівняння: <em>5x + 3 = 28</em></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q3" value="A"><span class="lt">A</span>x = 5</label>
+      <label class="opt"><input type="radio" name="q3" value="B"><span class="lt">B</span>x = 6</label>
+      <label class="opt"><input type="radio" name="q3" value="C"><span class="lt">C</span>x = 4</label>
+      <label class="opt"><input type="radio" name="q3" value="D"><span class="lt">D</span>x = 7</label>
+    </div>
+    <div class="qfb" id="q3-fb"></div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qcard" id="q4">
+  <div class="qcard-head"><span class="qnum">Завд. 4</span><span class="qtopic">Теорема Піфагора</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Прямокутний трикутник має катети <strong>6 см</strong> і <strong>8 см</strong>.</div>
+    <div class="qtext">Яка довжина гіпотенузи?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q4" value="A"><span class="lt">A</span>12 см</label>
+      <label class="opt"><input type="radio" name="q4" value="B"><span class="lt">B</span>10 см</label>
+      <label class="opt"><input type="radio" name="q4" value="C"><span class="lt">C</span>14 см</label>
+      <label class="opt"><input type="radio" name="q4" value="D"><span class="lt">D</span>11 см</label>
+    </div>
+    <div class="qfb" id="q4-fb"></div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qcard" id="q5">
+  <div class="qcard-head"><span class="qnum">Завд. 5</span><span class="qtopic">Статистика · Медіана</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Результати тесту семи учнів: <strong>4, 9, 6, 7, 5, 8, 6</strong>.</div>
+    <div class="qtext">Яка медіана цього набору даних?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q5" value="A"><span class="lt">A</span>5</label>
+      <label class="opt"><input type="radio" name="q5" value="B"><span class="lt">B</span>6</label>
+      <label class="opt"><input type="radio" name="q5" value="C"><span class="lt">C</span>7</label>
+      <label class="opt"><input type="radio" name="q5" value="D"><span class="lt">D</span>6,4</label>
+    </div>
+    <div class="qfb" id="q5-fb"></div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="qcard" id="q6">
+  <div class="qcard-head"><span class="qnum">Завд. 6</span><span class="qtopic">Пропорції · Масштаб</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> На карті масштаб 1 : 50 000. Два міста на карті розділені <strong>6 см</strong>.</div>
+    <div class="qtext">Яка реальна відстань між містами?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q6" value="A"><span class="lt">A</span>3 км</label>
+      <label class="opt"><input type="radio" name="q6" value="B"><span class="lt">B</span>30 км</label>
+      <label class="opt"><input type="radio" name="q6" value="C"><span class="lt">C</span>300 м</label>
+      <label class="opt"><input type="radio" name="q6" value="D"><span class="lt">D</span>0,3 км</label>
+    </div>
+    <div class="qfb" id="q6-fb"></div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qcard" id="q7">
+  <div class="qcard-head"><span class="qnum">Завд. 7</span><span class="qtopic">Функції · Лінійна</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qtext">Пряма задана формулою <em>y = 3x − 2</em>. Яке значення y при x = 4?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q7" value="A"><span class="lt">A</span>10</label>
+      <label class="opt"><input type="radio" name="q7" value="B"><span class="lt">B</span>14</label>
+      <label class="opt"><input type="radio" name="q7" value="C"><span class="lt">C</span>12</label>
+      <label class="opt"><input type="radio" name="q7" value="D"><span class="lt">D</span>8</label>
+    </div>
+    <div class="qfb" id="q7-fb"></div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qcard" id="q8">
+  <div class="qcard-head"><span class="qnum">Завд. 8</span><span class="qtopic">Ймовірність</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> В мішку 4 червоні, 3 сині і 5 зелених кулі.</div>
+    <div class="qtext">Яка ймовірність витягнути <em>червону</em> кулю?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q8" value="A"><span class="lt">A</span>1/3</label>
+      <label class="opt"><input type="radio" name="q8" value="B"><span class="lt">B</span>4/12 = 1/3</label>
+      <label class="opt"><input type="radio" name="q8" value="C"><span class="lt">C</span>1/4</label>
+      <label class="opt"><input type="radio" name="q8" value="D"><span class="lt">D</span>4/7</label>
+    </div>
+    <div class="qfb" id="q8-fb"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     ЧАСТИНА B — Відкриті задачі, калькулятор
+════════════════════════════ -->
+<div class="sec-div"><div class="sec-pill">🔢 Частина B · Відкриті задачі · Калькулятор дозволено</div></div>
+
+<!-- Q9 -->
+<div class="qcard" id="q9">
+  <div class="qcard-head"><span class="qnum">Завд. 9</span><span class="qtopic">Площа · Прямокутник</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Ліна хоче постелити нову підлогу у своїй кімнаті. Кімната прямокутна: <strong>5,4 м × 3,8 м</strong>. Один квадратний метр паркету коштує <strong>180 крон</strong>.</div>
+    <div class="qtext">Скільки крон коштуватиме увесь паркет? (Округліть площу до 0,01 м²)</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q9-in" placeholder="Відповідь у кронах">
+      <span class="open-reveal" id="q9-rv"></span>
+    </div>
+    <div class="qfb" id="q9-fb"></div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qcard" id="q10">
+  <div class="qcard-head"><span class="qnum">Завд. 10</span><span class="qtopic">Геометрія · Об'єм</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Бак для води має форму циліндра. Радіус основи — <strong>30 см</strong>, висота — <strong>80 см</strong>. (π ≈ 3,14)</div>
+    <div class="qtext">Який об'єм бака у літрах? (1 дм³ = 1 л, округліть до цілого)</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q10-in" placeholder="Об'єм у літрах">
+      <span class="open-hint">Підказка: V = π·r²·h, переведіть у дм³</span>
+      <span class="open-reveal" id="q10-rv"></span>
+    </div>
+    <div class="qfb" id="q10-fb"></div>
+  </div>
+</div>
+
+<!-- Q11 -->
+<div class="qcard" id="q11">
+  <div class="qcard-head"><span class="qnum">Завд. 11</span><span class="qtopic">Відсотки · Знижка</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Телефон коштував 4 990 крон. Після знижки він коштує <strong>3 742,50 крон</strong>.</div>
+    <div class="qtext">Який відсоток знижки? Запишіть ціле число.</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q11-in" placeholder="Знижка у %">
+      <span class="open-reveal" id="q11-rv"></span>
+    </div>
+    <div class="qfb" id="q11-fb"></div>
+  </div>
+</div>
+
+<!-- Q12 -->
+<div class="qcard" id="q12">
+  <div class="qcard-head"><span class="qnum">Завд. 12</span><span class="qtopic">Система рівнянь</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Дорослий квиток коштує <strong>120 крон</strong>, дитячий — <strong>70 крон</strong>. Група з 9 осіб заплатила разом <strong>880 крон</strong>.</div>
+    <div class="qtext">Скільки дорослих і скільки дітей у групі? Запишіть кількість дорослих.</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q12-in" placeholder="Кількість дорослих">
+      <span class="open-reveal" id="q12-rv"></span>
+    </div>
+    <div class="qfb" id="q12-fb"></div>
+  </div>
+</div>
+
+<!-- Q13 -->
+<div class="qcard" id="q13">
+  <div class="qcard-head"><span class="qnum">Завд. 13</span><span class="qtopic">Геометрія · Трикутник</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Трикутний дворик має основу <strong>14 м</strong> і висоту <strong>9 м</strong>. Газон коштує <strong>85 крон за м²</strong>.</div>
+    <div class="qtext">Скільки коштуватиме газон для всього дворика?</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q13-in" placeholder="Вартість у кронах">
+      <span class="open-reveal" id="q13-rv"></span>
+    </div>
+    <div class="qfb" id="q13-fb"></div>
+  </div>
+</div>
+
+<!-- Q14 -->
+<div class="qcard" id="q14">
+  <div class="qcard-head"><span class="qnum">Завд. 14</span><span class="qtopic">Швидкість · Час · Відстань</span><span class="qpts">2 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Поїзд їде зі швидкістю <strong>120 км/год</strong>. Відстань між містами — <strong>450 км</strong>.</div>
+    <div class="qtext">Скільки годин займе поїздка? (Запишіть десятковий дріб)</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q14-in" placeholder="Час у годинах" step="0.1">
+      <span class="open-reveal" id="q14-rv"></span>
+    </div>
+    <div class="qfb" id="q14-fb"></div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="qcard" id="q15">
+  <div class="qcard-head"><span class="qnum">Завд. 15</span><span class="qtopic">Площа кола</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Кругла клумба має діаметр <strong>8 м</strong>. Садівник хоче засіяти її насінням. Одна упаковка насіння розрахована на <strong>10 м²</strong>.</div>
+    <div class="qtext">Скільки упаковок насіння потрібно купити? (π ≈ 3,14, округліть вгору до цілого)</div>
+    <div class="open-wrap">
+      <input class="open-in" type="number" id="q15-in" placeholder="Кількість упаковок">
+      <span class="open-reveal" id="q15-rv"></span>
+    </div>
+    <div class="qfb" id="q15-fb"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     ЧАСТИНА C — Міркування і аналіз
+════════════════════════════ -->
+<div class="sec-div"><div class="sec-pill">💡 Частина C · Міркування та аналіз</div></div>
+
+<!-- Q16 -->
+<div class="qcard" id="q16">
+  <div class="qcard-head"><span class="qnum">Завд. 16</span><span class="qtopic">Відсотки · Зростання</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Банк нараховує <strong>4% річних</strong>. Юлія поклала на рахунок <strong>5 000 крон</strong>.</div>
+    <div class="qtext">Скільки грошей буде на рахунку через <em>2 роки</em>? (Відсотки нараховуються на початкову суму щороку)</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q16" value="A"><span class="lt">A</span>5 200 крон</label>
+      <label class="opt"><input type="radio" name="q16" value="B"><span class="lt">B</span>5 400 крон</label>
+      <label class="opt"><input type="radio" name="q16" value="C"><span class="lt">C</span>5 408 крон</label>
+      <label class="opt"><input type="radio" name="q16" value="D"><span class="lt">D</span>5 416 крон</label>
+    </div>
+    <div class="qfb" id="q16-fb"></div>
+  </div>
+</div>
+
+<!-- Q17 -->
+<div class="qcard" id="q17">
+  <div class="qcard-head"><span class="qnum">Завд. 17</span><span class="qtopic">Геометрія · Площа складної фігури</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Фігура складається з прямокутника <strong>10 × 6 м</strong>, до якого приставлений трикутник з основою <strong>10 м</strong> і висотою <strong>4 м</strong>.</div>
+    <div class="qtext">Яка загальна площа фігури?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q17" value="A"><span class="lt">A</span>60 м²</label>
+      <label class="opt"><input type="radio" name="q17" value="B"><span class="lt">B</span>80 м²</label>
+      <label class="opt"><input type="radio" name="q17" value="C"><span class="lt">C</span>100 м²</label>
+      <label class="opt"><input type="radio" name="q17" value="D"><span class="lt">D</span>70 м²</label>
+    </div>
+    <div class="qfb" id="q17-fb"></div>
+  </div>
+</div>
+
+<!-- Q18 -->
+<div class="qcard" id="q18">
+  <div class="qcard-head"><span class="qnum">Завд. 18</span><span class="qtopic">Алгебра · Нерівність</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qtext">Яке з тверджень правильно описує розв'язок нерівності <em>2x − 4 &gt; 10</em>?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q18" value="A"><span class="lt">A</span>x &gt; 3</label>
+      <label class="opt"><input type="radio" name="q18" value="B"><span class="lt">B</span>x &gt; 7</label>
+      <label class="opt"><input type="radio" name="q18" value="C"><span class="lt">C</span>x &lt; 7</label>
+      <label class="opt"><input type="radio" name="q18" value="D"><span class="lt">D</span>x &gt; 14</label>
+    </div>
+    <div class="qfb" id="q18-fb"></div>
+  </div>
+</div>
+
+<!-- Q19 -->
+<div class="qcard" id="q19">
+  <div class="qcard-head"><span class="qnum">Завд. 19</span><span class="qtopic">Геометрія · Симетрія та кути</span><span class="qpts">3 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Правильний п'ятикутник (усі сторони і кути рівні).</div>
+    <div class="qtext">Яка сума всіх внутрішніх кутів правильного п'ятикутника?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q19" value="A"><span class="lt">A</span>360°</label>
+      <label class="opt"><input type="radio" name="q19" value="B"><span class="lt">B</span>450°</label>
+      <label class="opt"><input type="radio" name="q19" value="C"><span class="lt">C</span>540°</label>
+      <label class="opt"><input type="radio" name="q19" value="D"><span class="lt">D</span>720°</label>
+    </div>
+    <div class="qfb" id="q19-fb"></div>
+  </div>
+</div>
+
+<!-- Q20 -->
+<div class="qcard" id="q20">
+  <div class="qcard-head"><span class="qnum">Завд. 20</span><span class="qtopic">Міркування · Оптимізація</span><span class="qpts">4 бали</span></div>
+  <div class="qcard-body">
+    <div class="qctx"><strong>Ситуація.</strong> Фермер має <strong>80 м</strong> огорожі. Він хоче огородити прямокутну ділянку, використовуючи стіну сараю як одну зі сторін (стіна не потребує огорожі).</div>
+    <div class="qtext">Яка максимальна площа ділянки, яку він може огородити?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="q20" value="A"><span class="lt">A</span>400 м²</label>
+      <label class="opt"><input type="radio" name="q20" value="B"><span class="lt">B</span>600 м²</label>
+      <label class="opt"><input type="radio" name="q20" value="C"><span class="lt">C</span>800 м²</label>
+      <label class="opt"><input type="radio" name="q20" value="D"><span class="lt">D</span>1 600 м²</label>
+    </div>
+    <div class="qfb" id="q20-fb"></div>
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div class="btn-row">
+  <button class="btn-check" id="checkBtn" onclick="checkAll()">Перевірити всі відповіді</button>
+  <button class="btn-reset" id="resetBtn" onclick="resetAll()">↺ Почати знову</button>
+</div>
+
+<!-- RESULT -->
+<div class="result" id="result">
+  <div class="res-top">
+    <div class="res-score" id="rScore"></div>
+    <div>
+      <div class="res-label">Твій результат · Nationella prov</div>
+      <div class="res-verdict" id="rVerdict"></div>
+    </div>
+  </div>
+  <div class="res-body">
+    <div class="res-bd" id="rBD"></div>
+    <div class="grade-box">
+      <div class="grade-title">Шведська шкала оцінювання (Betyg)</div>
+      <div class="grade-row">
+        <div class="gb gF" id="gF">F<br><small>&lt;30%</small></div>
+        <div class="gb gE" id="gE">E<br><small>30%</small></div>
+        <div class="gb gD" id="gD">D<br><small>45%</small></div>
+        <div class="gb gC" id="gC">C<br><small>55%</small></div>
+        <div class="gb gB" id="gB">B<br><small>70%</small></div>
+        <div class="gb gA" id="gA">A<br><small>85%</small></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Nationella prov · Matematik · Grundskola åk 7–9 · Skolverket format</div>
+</div>
+
+<script>
+// ── Answer key ─────────────────────────
+const MC = {
+  q1:'B', q2:'B', q3:'A', q4:'B', q5:'C',
+  q6:'A', q7:'A', q8:'B', q16:'B', q17:'B',
+  q18:'B', q19:'C', q20:'C'
+};
+
+const MC_EX = {
+  q1:'40% від 25 = 0,40 × 25 = 10 учнів.',
+  q2:'P = 2·(12+7) = 2·19 = 38 м.',
+  q3:'5x = 28−3 = 25 → x = 5.',
+  q4:'c = √(6²+8²) = √(36+64) = √100 = 10 см.',
+  q5:'Впорядковано: 4,5,6,6,7,8,9 → медіана (4-й елемент) = 6. Але правильна відповідь С=7? Ні: медіана = 6 (В=6 правильно).',
+  q6:'6 см × 50 000 = 300 000 см = 3 000 м = 3 км.',
+  q7:'y = 3·4 − 2 = 12 − 2 = 10.',
+  q8:'4 червоні з 12 кулей = 4/12 = 1/3.',
+  q16:'Простий відсоток: 5000 + 2·(5000·0,04) = 5000 + 400 = 5 400 крон.',
+  q17:'S прямокутника = 10·6 = 60 м². S трикутника = ½·10·4 = 20 м². Разом = 80 м².',
+  q18:'2x > 14 → x > 7.',
+  q19:'Сума кутів многокутника = (n−2)·180°. Для n=5: (5−2)·180° = 540°.',
+  q20:'Стіна = одна довга сторона. Огорожа: 2x + y = 80 → y = 80−2x. S = x·y = x·(80−2x). Максимум при x=20: S = 20·40 = 800 м².'
+};
+
+const OPEN = {
+  q9:  { val:3693.6, tol:5,   ex:'S = 5,4·3,8 = 20,52 м². Вартість = 20,52·180 = 3 693,6 крони.' },
+  q10: { val:226,   tol:2,   ex:'V = π·r²·h = 3,14·0,09·0,8 = 0,226 м³ = 226 дм³ = 226 л.' },
+  q11: { val:25,    tol:0,   ex:'Знижка = (4990−3742,5)/4990 = 1247,5/4990 = 0,25 = 25%.' },
+  q12: { val:5,     tol:0,   ex:'Д+Д_д=9, 120Д+70(9−Д)=880 → 50Д=880−630=250 → Д=5.' },
+  q13: { val:5355,  tol:1,   ex:'S = ½·14·9 = 63 м². Вартість = 63·85 = 5 355 крон.' },
+  q14: { val:3.75,  tol:0.01,ex:'t = 450/120 = 3,75 год.' },
+  q15: { val:6,     tol:0,   ex:'r=4. S = 3,14·16 = 50,24 м². Упаковок = ⌈50,24/10⌉ = 6.' }
+};
+
+const PTS = {
+  q1:2,q2:2,q3:2,q4:2,q5:2,q6:2,q7:2,q8:2,
+  q9:2,q10:3,q11:2,q12:3,q13:3,q14:2,q15:3,
+  q16:3,q17:3,q18:3,q19:3,q20:4
+};
+const MAX = Object.values(PTS).reduce((a,b)=>a+b,0);
+
+// Q5 fix: median of sorted [4,5,6,6,7,8,9] is 6 → answer B not C
+MC.q5 = 'B';
+MC_EX.q5 = 'Впорядковано: 4,5,6,6,7,8,9 → серединний (4-й) елемент = 6.';
+
+// progress
+function upProg(){
+  let d=0;
+  Object.keys(MC).forEach(k=>{ if(document.querySelector(`input[name="${k}"]:checked`)) d++; });
+  Object.keys(OPEN).forEach(k=>{ if(document.getElementById(`${k}-in`).value.trim()) d++; });
+  document.getElementById('ptxt').textContent=`${d} / 20`;
+  document.getElementById('pbar').style.width=(d/20*100)+'%';
+}
+document.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener('change',upProg));
+document.querySelectorAll('.open-in').forEach(i=>i.addEventListener('input',upProg));
+
+const QNAMES={
+  q1:'Завд.1 — Відсотки',q2:'Завд.2 — Периметр',q3:'Завд.3 — Рівняння',
+  q4:'Завд.4 — Піфагор',q5:'Завд.5 — Медіана',q6:'Завд.6 — Масштаб',
+  q7:'Завд.7 — Функція',q8:'Завд.8 — Ймовірність',q9:'Завд.9 — Площа/ціна',
+  q10:'Завд.10 — Об\'єм',q11:'Завд.11 — Знижка',q12:'Завд.12 — Рівняння',
+  q13:'Завд.13 — Трикутник',q14:'Завд.14 — Швидкість',q15:'Завд.15 — Коло',
+  q16:'Завд.16 — Відсотки',q17:'Завд.17 — Площа',q18:'Завд.18 — Нерівність',
+  q19:'Завд.19 — Кути',q20:'Завд.20 — Оптимізація'
+};
+
+function checkAll(){
+  let pts=0, all=true, bd=[];
+
+  // MC
+  Object.keys(MC).forEach(k=>{
+    const sel=document.querySelector(`input[name="${k}"]:checked`);
+    if(!sel){all=false;return;}
+    const qEl=document.getElementById(k);
+    const fb=document.getElementById(`${k}-fb`);
+    const ok=sel.value===MC[k];
+    qEl.querySelectorAll('.opt').forEach(o=>{
+      const v=o.querySelector('input').value;
+      if(v===MC[k]) o.classList.add('ok');
+      else if(v===sel.value&&!ok) o.classList.add('err');
+      o.querySelector('input').disabled=true;
+      o.style.pointerEvents='none';
+    });
+    qEl.classList.add(ok?'ok':'err');
+    fb.className='qfb show '+(ok?'ok':'err');
+    fb.textContent=(ok?'✓ Правильно! ':'✗ ')+MC_EX[k];
+    const p=ok?PTS[k]:0; pts+=p;
+    bd.push({k,ok,p,max:PTS[k]});
+  });
+
+  // Open
+  Object.keys(OPEN).forEach(k=>{
+    const inp=document.getElementById(`${k}-in`);
+    const val=parseFloat(inp.value);
+    if(isNaN(val)){all=false;return;}
+    const cfg=OPEN[k];
+    const ok=Math.abs(val-cfg.val)<=cfg.tol;
+    const qEl=document.getElementById(k);
+    const fb=document.getElementById(`${k}-fb`);
+    const rv=document.getElementById(`${k}-rv`);
+    inp.classList.add(ok?'ok':'err');
+    inp.disabled=true;
+    if(!ok){rv.textContent=`Правильна відповідь: ${cfg.val}`;rv.style.display='block';}
+    qEl.classList.add(ok?'ok':'err');
+    fb.className='qfb show '+(ok?'ok':'err');
+    fb.textContent=(ok?'✓ Правильно! ':'✗ ')+cfg.ex;
+    const p=ok?PTS[k]:0; pts+=p;
+    bd.push({k,ok,p,max:PTS[k]});
+  });
+
+  if(!all){alert('Будь ласка, дай відповідь на всі 20 завдань.');return;}
+
+  // Sort breakdown by question number
+  bd.sort((a,b)=>parseInt(a.k.replace('q',''))-parseInt(b.k.replace('q','')));
+
+  const pct=Math.round(pts/MAX*100);
+  let grade,verdict;
+  if(pct>=85){grade='A';verdict='Рівень A — Відмінно! (Mycket väl godkänd)';}
+  else if(pct>=70){grade='B';verdict='Рівень B — Дуже добре!';}
+  else if(pct>=55){grade='C';verdict='Рівень C — Добре (Väl godkänd).';}
+  else if(pct>=45){grade='D';verdict='Рівень D — Задовільно.';}
+  else if(pct>=30){grade='E';verdict='Рівень E — Прийнятно (Godkänd).';}
+  else{grade='F';verdict='Рівень F — Нижче мінімуму. Потрібно повторити матеріал.';}
+
+  document.getElementById('rScore').textContent=`${pts}/${MAX}`;
+  document.getElementById('rVerdict').textContent=verdict;
+  document.getElementById('rBD').innerHTML=bd.map(b=>
+    `<div class="rbi ${b.ok?'ok':'err'}">
+      <span class="rbi-ico">${b.ok?'✓':'✗'}</span>
+      <span class="rbi-q">${QNAMES[b.k]}</span>
+      <span>${b.ok?`+${b.p} б`:`0/${b.max} б`}</span>
+    </div>`).join('');
+
+  ['F','E','D','C','B','A'].forEach(g=>{
+    const el=document.getElementById('g'+g);
+    el.classList.toggle('hi',g===grade);
+  });
+
+  document.getElementById('result').classList.add('show');
+  document.getElementById('checkBtn').style.display='none';
+  document.getElementById('resetBtn').style.display='block';
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type="radio"]').forEach(r=>{r.checked=false;r.disabled=false;});
+  document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('ok','err');o.style.pointerEvents='';});
+  document.querySelectorAll('.open-in').forEach(i=>{i.value='';i.classList.remove('ok','err');i.disabled=false;});
+  document.querySelectorAll('.open-reveal').forEach(r=>{r.style.display='none';r.textContent='';});
+  document.querySelectorAll('.qcard').forEach(q=>q.classList.remove('ok','err'));
+  document.querySelectorAll('.qfb').forEach(f=>{f.className='qfb';f.textContent='';});
+  document.getElementById('result').classList.remove('show');
+  document.getElementById('checkBtn').style.display='';
+  document.getElementById('resetBtn').style.display='none';
+  document.getElementById('pbar').style.width='0%';
+  document.getElementById('ptxt').textContent='0 / 20';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
